@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, computed } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -8,12 +8,20 @@ import { Component, Input } from '@angular/core';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  @Input({required: true}) avatar!: string
-  @Input({required: true}) name!: string
-
-  get imagePath() {
-    return 'assets/users/' + this.avatar
-  }
+  // Standard State Management:
+  // @Input({required: true}) avatar!: string;
+  // @Input({required: true}) name!: string;
+ 
+  // get imagePath() {
+  //   return 'assets/users/' + this.avatar
+  // }
+  
+  // With signals:
+  avatar = input.required<string>();
+  name = input.required<string>();
+  imagePath = computed(() => {
+    return 'assets/users/' + this.avatar()
+  })
   
   onSelectUser() {}
 }
