@@ -1,5 +1,11 @@
 import { Component, input, output, computed } from '@angular/core';
 
+type User = {
+  id: string,
+  avatar: string,
+  name: string
+}
+
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -19,16 +25,14 @@ export class UserComponent {
   // }
   
   // With signals:
-  id = input.required<string>();
-  avatar = input.required<string>();
-  name = input.required<string>();
+  user = input.required<User>();
   select = output<string>()
   
   imagePath = computed(() => {
-    return 'assets/users/' + this.avatar()
+    return 'assets/users/' + this.user().avatar
   })
   
   onSelectUser() {
-    this.select.emit(this.id())
+    this.select.emit(this.user().id)
   }
 }
