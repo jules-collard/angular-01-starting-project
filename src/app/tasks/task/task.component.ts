@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 import { Task } from './task.model';
 
@@ -11,4 +11,10 @@ import { Task } from './task.model';
 })
 export class TaskComponent {
   task = input.required<Task>();
+
+  complete = output<string>();
+
+  onCompleteTask() {
+    this.complete.emit(this.task().id);
+  }
 }

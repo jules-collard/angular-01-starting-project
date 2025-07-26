@@ -1,5 +1,7 @@
-import { Component, input, computed } from '@angular/core';
+import { Component, input, computed, signal } from '@angular/core';
 import { TaskComponent } from "./task/task.component";
+
+import { Task } from "./task/task.model"
 
 import { dummyTasks } from "../dummy-tasks";
 
@@ -13,9 +15,16 @@ import { dummyTasks } from "../dummy-tasks";
 export class TasksComponent {
   userId = input<string>();
   name = input<string>();
-  tasks = dummyTasks
+  tasks = signal<Task[]>(dummyTasks)
 
   selectedUserTasks = computed(() => 
-    this.tasks.filter((task) => task.userId === this.userId())
+    this.tasks().filter((task) => task.userId === this.userId())
   )
+
+  onCompleteTask(id: string) {
+    this.tasks.update(
+      tasks => tasks.filter(task => task.id !== id)
+    )
+  }
 }
+

@@ -24,11 +24,11 @@ export class UserComponent {
   user = input.required<User>();
   selected = input.required<boolean>();
   
-  select = output<string>()
-  
   imagePath = computed(() => {
     return 'assets/users/' + this.user().avatar
   })
+
+  select = output<string>()
   
   onSelectUser() {
     this.select.emit(this.user().id)
