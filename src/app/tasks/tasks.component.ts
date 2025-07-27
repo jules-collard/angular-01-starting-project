@@ -1,10 +1,8 @@
-import { Component, input, computed, signal } from '@angular/core';
+import { Component, input, computed, signal, inject } from '@angular/core';
 import { TaskComponent } from "./task/task.component";
-
-import { Task, NewTaskData } from "./task/task.model"
-
-import { dummyTasks } from "../dummy-tasks";
+import { TasksService } from './tasks.service';
 import { NewTaskComponent } from './new-task/new-task.component';
+
 
 @Component({
   selector: 'app-tasks',
@@ -16,35 +14,18 @@ import { NewTaskComponent } from './new-task/new-task.component';
 export class TasksComponent {
   userId = input.required<string>();
   name = input<string>();
-  tasks = signal<Task[]>(dummyTasks)
   isAddingTask = signal<boolean>(false)
+  private tasksService = inject(TasksService)
 
-  selectedUserTasks = computed(() => 
-    this.tasks().filter((task) => task.userId === this.userId())
+  selectedUserTasks = computed(() =>
+    this.tasksService.tasks().filter((task) => task.userId === this.userId())
   )
-
-  onCompleteTask(id: string) {
-    this.tasks.update(
-      tasks => tasks.filter(task => task.id !== id)
-    )
-  }
 
   onStartAddTask() {
     this.isAddingTask.set(true)
   }
 
-  onCancelAddTask() {
-    this.isAddingTask.set(false)
-  }
-
-  onAddTask(taskData: NewTaskData) {
-    this.tasks.update(tasks => [...tasks, {
-      id: new Date().getTime().toString(),
-      userId: this.userId(),
-      title: taskData.title,
-      summary: taskData.summary,
-      dueDate: taskData.date 
-    }])
+  onCloseAddTask() {
     this.isAddingTask.set(false)
   }
 }
