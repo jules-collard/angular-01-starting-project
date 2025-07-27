@@ -1,7 +1,7 @@
 import { Component, input, computed, signal } from '@angular/core';
 import { TaskComponent } from "./task/task.component";
 
-import { Task } from "./task/task.model"
+import { Task, NewTaskData } from "./task/task.model"
 
 import { dummyTasks } from "../dummy-tasks";
 import { NewTaskComponent } from './new-task/new-task.component';
@@ -34,6 +34,17 @@ export class TasksComponent {
   }
 
   onCancelAddTask() {
+    this.isAddingTask.set(false)
+  }
+
+  onAddTask(taskData: NewTaskData) {
+    this.tasks.update(tasks => [...tasks, {
+      id: new Date().getTime().toString(),
+      userId: this.userId(),
+      title: taskData.title,
+      summary: taskData.summary,
+      dueDate: taskData.date 
+    }])
     this.isAddingTask.set(false)
   }
 }
