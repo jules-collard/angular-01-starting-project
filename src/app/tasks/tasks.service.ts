@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 import { dummyTasks } from "../dummy-tasks";
 import { NewTaskData, Task } from "./task/task.model";
 

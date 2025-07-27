@@ -11,17 +11,6 @@ import { CardComponent } from '../shared/card/card.component';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  // Standard State Management:
-  // @Input({required: true}) id!: string;
-  // @Input({required: true}) avatar!: string;
-  // @Input({required: true}) name!: string;
-  // @Output() select = new EventEmitter();
-
-  // get imagePath() {
-  //   return 'assets/users/' + this.avatar
-  // }
-  
-  // With signals:
   user = input.required<User>();
   selected = input.required<boolean>();
   
